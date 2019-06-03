@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load extend_fun %}
+{% block body %}
+<div class="commod-cont-wrap">
+      <div class="commod-cont w1200 layui-clear">
+        <div class="left-nav">
+          <div class="title">所有分类</div>
+          <div class="list-box">
+            {% for c in cla %}
+                <dl>
+                    {% getcomid c.id as clss %}
+                 <dt>{{ c.title }}</dt>
+                    {% for b in clss.classifys_set.all %}
+                        <dd><a href="{% url 'babymall:commoditys' b.id %}">{{ b.title }}</a></dd>
+                    {% endfor %}
+
+                </dl>
+            {% endfor %}
+
+          </div>
+        </div>
+        <div class="right-cont-wrap">
+          <div class="right-cont">
+            <div class="sort layui-clear">
+              <a class="active" href="javascript:" >销量</a>
+              <a href="javascript:" >价格</a>
+              <a href="javascript:" >新品</a>
+              <a href="javascript:" >收藏</a>
+            </div>
+            <div class="prod-number">
+              <span>{{ num }}个商品</span>
+            </div>
+            <div class="cont-list layui-clear" id="list-cont">
+                {% if page %}
+                {% for c in com %}
+                    <div class="item">
+                        <div class="img">
+                          <a href="{% url 'babymall:details' c.id%}"><img src="/static/media/{{ c.img }}" style="width: 280px; height: 280px" alt=""></a>
+                        </div>
+                        <div class="text">
+                          <p class="title">{{ c.title }}</p>
+                          <p class="price">
+                            <span class="pri">￥{{ c.ciur_pic }}</span>
+                            <span class="nub">{{ c.nub }}付款</span>
+                          </p>
+                        </div>
+                      </div>
+                {% endfor %}
+                {% endif %}
+
+            </div>
+            <!-- 模版引擎导入 -->
+
+{#            <div id="demo0" style="text-align: center;"></div>#}
+            <div class="pagination" style="text-align: center; margin: 0 0 0 0; ">
+                <ul style="font-family: 'Lato', sans-serif;">
+                    {% if page.has_previous %}
+                        <li><a href="{{ page.parms }}?page={{ page.previous_page_number }}">上一页</a></li>
+                    {% endif %}
+                    {% for num in paginator.page_range %}
+                        <li><a href="{{ page.parms }}?page={{ num }}">{{ num }}</a></li>
+                    {% endfor %}
+                    {% if page.has_next %}
+                        <li><a href="{{ page.parms }}?page={{ page.next_page_number }}">下一页</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+{% endblock %}
+
+{% block scr %}
+<script>
+
+  layui.config({
+    base: '/static/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
+  }).use(['mm','laypage','jquery'],function(){
+      var laypage = layui.laypage,$ = layui.$,
+     mm = layui.mm;
+       laypage.render({
+        elem: 'demo0'
+        ,count: 100 //数据总数
+      });
+
+
+    $('.sort a').on('click',function(){
+      $(this).addClass('active').siblings().removeClass('active');
+    });
+    $('.list-box dt').on('click',function(){
+      if($(this).attr('off')){
+        $(this).removeClass('active').siblings('dd').show();
+        $(this).attr('off','')
+      }else{
+        $(this).addClass('active').siblings('dd').hide();
+        $(this).attr('off',true)
+      }
+    })
+
+});
+</script>
+{% endblock %}

@@ -1,0 +1,3 @@
+{{ object.title }}
+{{ object.nub }}
+{{ object.ciur_pic }}

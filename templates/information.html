@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="info-list-box">
+      <div class="info-list w1200">
+        <div class="item-box layui-clear" id="list-cont">
+            {% for ca in case %}
+                <div class="item">
+                    <div class="img">
+                      <img src="/static/media/{{ ca.img }}" alt="">
+                    </div>
+                    <div class="text">
+                      <h4>{{ ca.title }}?</h4>
+                      <p class="data">{{ ca.data }}</p>
+                      <p class="info-cont">{{ ca.detail }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+
+
+        </div>
+        <div id="demo0" style="text-align: center;"></div>
+      </div>
+    </div>
+{% endblock %}
+
+{% block scr %}
+    <script>
+  layui.config({
+    base: '/static/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
+  }).use(['mm','laypage'],function(){
+      var
+      mm = layui.mm,laypage = layui.laypage;
+      laypage.render({
+        elem: 'demo0'
+        ,count: 100 //数据总数
+      });
+    // 模版引擎导入
+     // var html = demo.innerHTML;
+     // var listCont = document.getElementById('list-cont');
+     //  mm.request({
+     //    url: '../json/information.json',
+     //    success : function(res){
+     //      console.log(res)
+     //      listCont.innerHTML = mm.renderHtml(html,res)
+     //    },
+     //    error: function(res){
+     //      console.log(res);
+     //    }
+     //  })
+});
+
+</script>
+{% endblock %}
+

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="login-bg">
+      <div class="login-cont w1200">
+        <div class="form-box">
+          <form class="layui-form" action="{% url 'babymall:login' %}" method="post">
+              {% csrf_token %}
+              {{ error }}
+            <span>账号登录</span>
+            <div class="layui-form-item">
+              <div class="layui-inline iphone">
+                <div class="layui-input-inline">
+{#                  <i class="layui-icon layui-icon-cellphone iphone-icon"></i>#}
+                  <input type="text" name="username" id="username"  placeholder="请输入账号" autocomplete="off" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-inline iphone">
+                <div class="layui-input-inline">
+{#                  <i class="layui-icon layui-icon-cellphone iphone-icon"></i>#}
+                  <input type="password" name="password" id="password"  placeholder="请输入密码" autocomplete="off" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-inline veri-code">
+                <div class="layui-input-inline">
+                  <div><img src="{% url 'babymall:verify' %}" alt="" class="layui-btn" ></div>
+                  <input type="verify"  id="verify" name="verify"  placeholder="请输入验证码" autocomplete="off" class="layui-input">
+
+                </div>
+              </div>
+            </div>
+            <div class="layui-form-item login-btn">
+              <div class="layui-input-block">
+                <button class="layui-btn" type="submit" >登录</button>
+              </div>
+            </div>
+          </form>
+            {% if messages %}
+                <script>
+                    {% for msg in messages %}
+                        alert('{{ msg.message }}');
+                    {% endfor %}
+                </script>
+            {% endif %}
+        </div>
+      </div>
+    </div>
+{% endblock %}
+{% block scr %}
+
+{% endblock %}
+
+
+
